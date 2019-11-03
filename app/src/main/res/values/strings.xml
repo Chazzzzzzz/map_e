@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">map_e</string>
+    <string name="title_activity_maps">Map</string>
+    <string-array name="car_type">
+        <item>Select car type</item>
+        <item>Benz</item>
+        <item>BMW</item>
+        <item>Tesla</item>
+    </string-array>
+</resources>
