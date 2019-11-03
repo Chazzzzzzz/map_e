@@ -69,13 +69,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
             android:layout_marginStart="100dp"
-            android:text="price"/>
+            android:text="$ 0.12/kwh"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="200dp"
             android:text="6 hours for full charging"
             android:textColor="#cf1726"/>
 
@@ -140,13 +140,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
             android:layout_marginStart="100dp"
-            android:text="price"/>
+            android:text="$ 0.12/kwh"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="200dp"
             android:text="6 hours for full charging"
             android:textColor="#cf1726"/>
 
@@ -211,13 +211,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
             android:layout_marginStart="100dp"
-            android:text="price"/>
+            android:text="$ 0.12/kwh"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="200dp"
             android:text="6 hours for full charging"
             android:textColor="#cf1726"/>
 
