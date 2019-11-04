@@ -7,4 +7,5 @@
         <item>BMW</item>
         <item>Tesla</item>
     </string-array>
+    <string name="title_activity_street_view">StreetViewActivity</string>
 </resources>

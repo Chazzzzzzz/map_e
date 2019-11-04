@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet_detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="12dp"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="100dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/name_station"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Charging Station 1"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/availability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="open"
+            android:drawableStart="@drawable/ic_electric_station"
+            android:drawablePadding="20dp"
+            android:textSize="14sp"
+            android:textColor="#7f807a"/>
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="$ 0.12/kwh"
+            android:drawableStart="@drawable/ic_dollar"
+            android:drawablePadding="20dp"
+            android:textSize="14sp"
+            android:textColor="#7f807a"/>
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_phone"
+            android:layout_marginTop="120dp"
+            android:drawablePadding="20dp"
+            android:text="1123456"
+            android:textSize="14sp"
+            android:textColor="#7f807a"/>
+
+        <TextView
+            android:id="@+id/web"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_web"
+            android:layout_marginTop="160dp"
+            android:drawablePadding="20dp"
+            android:text="123.com"
+            android:textSize="14sp"
+            android:textColor="#7f807a"/>
+
+        <TextView
+            android:id="@+id/roof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_roof"
+            android:layout_marginTop="200dp"
+            android:drawablePadding="20dp"
+            android:text="roof provided"
+            android:textSize="14sp"
+            android:textColor="#7f807a"/>
+
+        <TextView
+            android:id="@+id/food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_food"
+            android:layout_marginTop="240dp"
+            android:drawablePadding="20dp"
+            android:text="food/drink provided"
+            android:textSize="14sp"
+            android:textColor="#7f807a"/>
+
+        <TextView
+            android:id="@+id/market"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_market"
+            android:layout_marginTop="280dp"
+            android:drawablePadding="20dp"
+            android:text="built-in supermarket"
+            android:textSize="14sp"
+            android:textColor="#7f807a"/>
+
+        <ImageView
+            android:id="@+id/Image"
+            android:layout_marginTop="320dp"
+            android:layout_width="400dp"
+            android:layout_height="200dp" />
+
+        <Button
+            android:id="@+id/button_streetView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Street View"
+            android:layout_marginLeft="270dp"
+            android:layout_marginTop="-12dp"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

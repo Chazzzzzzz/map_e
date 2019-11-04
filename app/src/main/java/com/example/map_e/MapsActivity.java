@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -21,7 +22,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,11 +44,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Marker;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import android.widget.Spinner;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import android.view.inputmethod.InputMethodManager;
 
@@ -71,6 +72,11 @@ public class MapsActivity extends FragmentActivity implements
 
     private BottomSheetBehavior sheetBehavior;
     private LinearLayout bottom_sheet;
+
+    private BottomSheetBehavior sheetBehavior_detail;
+    private LinearLayout bottom_sheet_detail;
+
+    private LatLng markerLatlng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +105,34 @@ public class MapsActivity extends FragmentActivity implements
             }
         });
 
+        bottom_sheet_detail = findViewById(R.id.bottom_sheet_detail);
+        sheetBehavior_detail = BottomSheetBehavior.from(bottom_sheet_detail);
+        sheetBehavior_detail.setState(BottomSheetBehavior.STATE_HIDDEN);
+        bottom_sheet_detail.setOnClickListener(new LinearLayout.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sheetBehavior_detail.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+
+        Button button = findViewById(R.id.button_streetView);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openStreetViewActivity();
+            }
+        });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    public void openStreetViewActivity(){
+        Intent intent = new Intent(this, StreetViewActivity.class);
+        intent.putExtra("lat", markerLatlng.latitude);
+        intent.putExtra("lng", markerLatlng.longitude);
+        startActivity(intent);
     }
 
     // called when the map is ready to use
@@ -118,6 +148,7 @@ public class MapsActivity extends FragmentActivity implements
             @Override
             public void onMapClick(LatLng latLng) {
                 sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                sheetBehavior_detail.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });
 
@@ -125,10 +156,42 @@ public class MapsActivity extends FragmentActivity implements
             @Override
             public boolean onMarkerClick(Marker marker) {
                 sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
+                sheetBehavior_detail.setState(BottomSheetBehavior.STATE_EXPANDED);
+                bottom_sheet_detail.setOnClickListener(new LinearLayout.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sheetBehavior_detail.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    }
+                });
+                markerLatlng = marker.getPosition();
+                updateBottomSheetDetailInfo(marker);
                 return false;
             }
         });
+    }
+
+    private void updateBottomSheetDetailInfo(Marker marker) {
+        Object transferData[] = new Object[3];
+        UpdateBottomSheetDetail updateBottomSheetDetail = new UpdateBottomSheetDetail();
+
+        String address = marker.getTitle();
+        String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + address +
+                "&key=AIzaSyBVMdpbOcNpTGDYk_9FzMSTr6vOGc1Z8T8";
+
+        HashMap<String, TextView> mapTextview = new HashMap<>();
+        mapTextview.put("name_station", (TextView) findViewById(R.id.name_station));
+        mapTextview.put("phone", (TextView) findViewById(R.id.phone));
+        mapTextview.put("web", (TextView) findViewById(R.id.web));
+        mapTextview.put("availability", (TextView) findViewById(R.id.availability));
+
+        HashMap<String, ImageView> mapImageView = new HashMap<>();
+        mapImageView.put("image", (ImageView) findViewById(R.id.Image));
+
+        transferData[0] = url;
+        transferData[1] = mapTextview;
+        transferData[2] = mapImageView;
+
+        updateBottomSheetDetail.execute(transferData);
     }
 
     public boolean checkUserLocationPermission() {
@@ -217,6 +280,7 @@ public class MapsActivity extends FragmentActivity implements
 
     // for search address
     public void onClick(View v) {
+        sheetBehavior_detail.setState(BottomSheetBehavior.STATE_HIDDEN);
         mMap.clear();
         if (v.getId() == R.id.button_search) {
             EditText addressField = (EditText) findViewById(R.id.location_search);
