@@ -76,7 +76,7 @@ public class MapsActivity extends FragmentActivity implements
     private BottomSheetBehavior sheetBehavior_detail;
     private LinearLayout bottom_sheet_detail;
 
-    private LatLng markerLatlng;
+    private Marker markerClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class MapsActivity extends FragmentActivity implements
         // add bottom sheet
         bottom_sheet = findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
-        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         bottom_sheet.setOnClickListener(new LinearLayout.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,11 +115,21 @@ public class MapsActivity extends FragmentActivity implements
             }
         });
 
+        // button for street view
         Button button = findViewById(R.id.button_streetView);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openStreetViewActivity();
+            }
+        });
+
+        // button for submitting review
+        Button buttonReview = findViewById(R.id.button_submitReview);
+        buttonReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSubmitReviewActivity();
             }
         });
 
@@ -130,8 +140,17 @@ public class MapsActivity extends FragmentActivity implements
 
     public void openStreetViewActivity(){
         Intent intent = new Intent(this, StreetViewActivity.class);
-        intent.putExtra("lat", markerLatlng.latitude);
-        intent.putExtra("lng", markerLatlng.longitude);
+        intent.putExtra("lat", markerClicked.getPosition().latitude);
+        intent.putExtra("lng", markerClicked.getPosition().longitude);
+        startActivity(intent);
+    }
+
+    public void openSubmitReviewActivity(){
+        Intent intent = new Intent(this, Review.class);
+        String markerTitle = markerClicked.getTitle();
+        String[] values = markerTitle.split(":");
+        intent.putExtra("name", values[0]);
+        intent.putExtra("address", values[1].trim());
         startActivity(intent);
     }
 
@@ -163,7 +182,7 @@ public class MapsActivity extends FragmentActivity implements
                         sheetBehavior_detail.setState(BottomSheetBehavior.STATE_EXPANDED);
                     }
                 });
-                markerLatlng = marker.getPosition();
+                markerClicked = marker;
                 updateBottomSheetDetailInfo(marker);
                 return false;
             }
@@ -258,7 +277,7 @@ public class MapsActivity extends FragmentActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
         searchNearByChargingStation();
-
+        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         if (googleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
         }

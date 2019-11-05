@@ -8,4 +8,5 @@
         <item>Tesla</item>
     </string-array>
     <string name="title_activity_street_view">StreetViewActivity</string>
+    <string name="title_activity_submit_review">SubmitReview</string>
 </resources>
